@@ -7,7 +7,7 @@
 
 #define CHECK_DELAY 4000
 
-#define ROBLOX_URI "roblox://placeID=13379208636/" // Roblox URI here
+#define ROBLOX_URI NULL
 
 int isProcessRunning(const char *precessName){
     int found = 0;
@@ -36,12 +36,30 @@ void startRoblox(){
     printf("✅ Roblox restarted successfuly.\n");
 }
 
+int uriChoose(){
+    char choice;
+    printf("Want to open Roblox with a specific URI? (y/n): ");
+    scanf(" %c", &choice);
+    if(choice == 'y'){
+        char uri[100];
+        printf("Enter the URI: ");
+        scanf("%s", ROBLOX_URI);
+        return 1;
+    }else if(choice == 'n'){
+        printf("No URI chosen.\n");
+        return 1;
+    }
+}
+
 int main(){
+    uriChoose();
+    int crashCount = 0;
     printf("🔎 Processus checking %s...\n", PROCESS_NAME);
+    printf("Roblox encounter %d crash", crashCount);
     while(1){
         if(!isProcessRunning(PROCESS_NAME)){
-            printf("⚠️ Roblox crashed. Restarting...");
-            Sleep(5);
+            printf("⚠️ Roblox crashed %d times. Restarting...", crashCount);
+            Sleep(6000);
             startRoblox();
         }
     }
